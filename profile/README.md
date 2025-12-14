@@ -26,52 +26,114 @@
 </div>
 
 ---
+## Degotchi
 
-## 💀 What is Degotchi?
+**Degotchi** is a crypto-native virtual pet system inspired by *Degen culture* and *Tamagotchi*.
 
-**Degotchi** is not just a game. It is a **parasitic AI identity** that lives on your phone and trades on the Solana blockchain.
+A Degotchi is an **on-chain pet with an independent personality**.
+It forms opinions, proposes actions, and expresses outcomes — but **never executes financial actions without explicit human approval**.
 
-It combines **Tamagotchi-style nostalgia** with **high-stakes DeFi anxiety**. Your Degotchi has a unique personality powered by LLMs. It reads Crypto Twitter, gets FOMO, gets FUD, and begs you to sign transactions.
+This project explores **human-in-the-loop AI decision systems** in a Web3 context.
 
-> **"AI Suggests, Human Approves."**
+---
 
-Your private keys never leave your device's **Secure Enclave**. The AI is the brain; you are the biometric gatekeeper.
+### Core Philosophy
 
-## 🧠 The Stack (Architecture)
+* 🧠 **AI suggests, humans decide**
+* 🐾 **Pets are first-class on-chain entities**
+* 🔐 **No private keys are ever handled by AI**
+* 🎮 **Finance as interaction, not automation**
 
-We are building a decentralized, non-custodial agent system across three distinct layers.
+Degotchi is **not** an auto-trading bot.
+It is a *personality-driven decision companion*.
 
-| Module | Repository | Tech Stack | Description |
-| :--- | :--- | :--- | :--- |
-| **THE BRAIN** | [**`degotchi-brain`**](https://github.com/Degotchi/degotchi-brain) | Python, PyTorch, LangChain | The AI backend. Scrapes Twitter, analyzes sentiment, generates trading signals, and talks trash to you. |
-| **THE BODY** | [**`degotchi-contracts`**](https://github.com/Degotchi/degotchi-contracts) | Rust, Anchor | The Solana Programs. Handles on-chain state, XP logic, evolution, and asset swaps. |
-| **THE SHELL** | [**`degotchi-mobile`**](https://github.com/Degotchi/degotchi-mobile) | Flutter/Swift, Biometrics | The iOS/Android app. Interacts with the Secure Enclave (FaceID) to sign the AI's requests. |
+---
 
-## 🧬 Core Mechanics
+### System Architecture
 
-### 1. Biometric DeFi Security
-We don't trust servers with keys. Your Degotchi's wallet is generated locally and locked behind **FaceID/TouchID**.
-- The AI sees an alpha call on X (Twitter).
-- The AI constructs a transaction to buy `$BONK`.
-- Your phone vibrates: *"Master, degen play detected. Approve?"*
-- **You look at your phone (FaceID) to sign.**
+The project is organized as a modular full-stack system:
 
-### 2. Emotional Volatility
-Your Degotchi isn't a cold bot. It has **needs**:
-- **Hunger:** Needs SOL for gas fees.
-- **Mood:** Changes based on PnL (Profit and Loss).
-- **Social:** If you ignore it, it might tweet embarrassing things about your wallet history.
+#### 🧠 Brain (Python)
 
-### 3. One-Click Adoption (Blinks)
-No app needed to start. Click a **Solana Blink** link on Twitter to mint your Egg. Install the app later to hatch and trade.
+AI decision engine and state orchestration:
 
-## 🗺 Roadmap
+* Market signal ingestion
+* Personality-driven decision modeling
+* Action proposal generation
+* Time-based state evolution (hunger, mood, cooldowns)
 
-- [ ] **Phase 0:** Genesis Egg Mint (via Blinks)
-- [ ] **Phase 1:** `degotchi-mobile` Alpha Release (Testflight)
-- [ ] **Phase 2:** AI Personality Integration (The "Roast" Module)
-- [ ] **Phase 3:** Mainnet Launch & Token Generation Event
+> Brain can propose actions, but cannot execute them.
 
+---
+
+#### 🧍 Body (Web / React)
+
+User-facing web interface:
+
+* Pet status visualization
+* Proposal review
+* Interaction history
+
+---
+
+#### 🪢 Leash (Mobile / React Native)
+
+User control and security layer:
+
+* Wallet connection
+* Biometric authentication
+* Explicit approval or rejection of proposals
+
+> Leash is the only component that can authorize real-world effects.
+
+---
+
+#### 🔗 On-chain Programs (Rust / Solana)
+
+Smart contracts defining:
+
+* Degotchi pet identity (NFT)
+* Pet ↔ User binding ("Leash")
+* Permission and allowance constraints
+* Immutable on-chain ownership logic
+
+---
+
+### Key Concepts
+
+* **Pet-first design**
+  Pets exist independently on-chain. Users adopt and bind to them.
+
+* **Human-in-the-loop execution**
+  All sensitive actions require explicit user approval.
+
+* **Personality-driven behavior**
+  Actions are influenced by pet traits, mood, and experience.
+
+* **Social expression with consent**
+  Degotchi can express decisions publicly (e.g. Twitter) only with user authorization.
+
+---
+
+### Technology Stack
+
+* **Blockchain**: Solana
+* **Smart Contracts**: Rust
+* **Backend / AI**: Python
+* **Database**: Supabase (PostgreSQL)
+* **Web**: React
+* **Mobile**: React Native
+* **Infrastructure**: Docker, Nginx, VPS
+* **RPC**: Helius
+
+---
+
+### Disclaimer
+
+Degotchi is an experimental project for educational and exploratory purposes.
+It does not provide financial advice and does not perform autonomous trading.
+
+---
 ## 🤝 Contributing
 
 We are building in public. We welcome **Rustaceans**, **Pythonistas**, and **Flutter Devs**.
