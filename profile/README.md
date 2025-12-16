@@ -113,8 +113,115 @@ Smart contracts defining:
 * **Social expression with consent**
   Degotchi can express decisions publicly (e.g. Twitter) only with user authorization.
 
+## Complete data sequenceDiagram
 ---
+```mermaid
+sequenceDiagram
+    autonumber
+    participant S as Scheduler
+    participant B as Brain Service
+    participant A as API Layer
+    participant U as User (Leash/Web)
+    participant E as Execution Layer
+    participant D as Database
 
+    S->>B: Periodic Tick
+    activate B
+    B->>B: Load Pet State & Build Context
+    
+    rect rgb(240, 240, 240)
+        Note right of B: Orchestrator Agents
+        B->>B: Hunger / Mood / Investment
+    end
+
+    B->>D: Persist Proposal
+    B->>A: Forward Proposal
+    deactivate B
+
+    A->>U: Notify User
+    
+    U->>E: Approve / Reject
+    
+    activate E
+    E->>E: On-chain / Social Side Effects
+    E->>B: Report Execution Result
+    deactivate E
+
+    activate B
+    B->>D: Update & Save Pet State
+    deactivate B
+```
+
+## System brain logics
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant S as Scheduler
+    participant B as Brain
+    participant O as Orchestrator
+    
+    S->>B: tick()
+    activate B
+    
+    Note right of B: Data Loading
+    B->>B: load_pet / user / market
+    B->>B: Create DecisionContext
+    
+    B->>O: select_agent()
+    activate O
+    
+    par Run Agents
+        O->>O: HungerAgent.propose()
+        and
+        O->>O: MoodAgent.propose()
+        and
+        O->>O: InvestmentAgent.propose()
+    end
+    
+    O-->>B: Return Selected Proposal
+    deactivate O
+
+    B->>B: save_proposal()
+    deactivate B
+```
+
+## User concept decisions 
+```mermaid
+sequenceDiagram
+    autonumber
+    participant App as User App (Leash)
+    participant API as API Layer
+    participant Exec as Execution Layer
+    participant Brain as Brain Service
+    participant DB as Database
+
+    App->>API: approve(proposal_id)
+    activate API
+    
+    API->>API: validate_proposal()
+    API->>API: check_pet_binding()
+    API->>API: check_allowance()
+
+    API->>Exec: Execute Payload
+    deactivate API
+    activate Exec
+
+    alt On-Chain
+        Exec->>Exec: Broadcast Tx
+    else Social
+        Exec->>Exec: Post Content
+    else Internal
+        Exec->>Exec: State Action
+    end
+
+    Exec->>Brain: Sync Result
+    deactivate Exec
+    
+    activate Brain
+    Brain->>DB: Update Pet State
+    deactivate Brain
+```
 ### Technology Stack
 
 * **Blockchain**: Solana
